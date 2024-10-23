@@ -31,7 +31,7 @@
 
 <svelte:window bind:scrollY={y} />
 
-<div style="min-height: 200vh; position: relative;">
+<div style="min-height: 200vh; position: relative; max-width: 400px; padding: 10px;">
   <!-- Scroll position -->
   <div>
     <h1>Bind scroll position to SVG attribute</h1>
@@ -44,14 +44,11 @@
 
   <!-- Zoom -->
   <div>
-    <h1>Zoom using viewBox</h1>
+    <h1>Zoom using Svelte and viewBox</h1>
     <p>
       Change width and height of SVG viewBox to zoom.
-      <br />
       Tweened store and Easing cubicInOut from Svelte.
-      <br />
       Use % to keep things in the same place; px to zoom.
-      <br />
       Inspired by
       <a href="https://youtu.be/_jWnyJRKOvU">this</a>
       .
@@ -72,6 +69,13 @@
       <rect x="10" y="10" width="80" height="80" fill="#55555533" />
       <rect x="20" y="20" width="60" height="60" fill="#55555533" />
       <rect x="30" y="30" width="40" height="40" fill="#55555533" />
+
+         <!-- Gridlines -->
+         {#each { length: 40 } as _, i}
+         <line x1="0" y1={i * 10} x2="400" y2={i * 10} stroke="#88888833" stroke-width="0.5" />
+         <line x1={i * 10} y1="0" x2={i * 10} y2="400" stroke="#88888833" stroke-width="0.5" />
+       {/each}
+ 
 
       <!-- Transform animation -->
       <circle cx="40%" cy="40%" r="4%" fill="red" class="animated" />
@@ -165,7 +169,7 @@
 
     <p>
       Objects animate from their initial positions. This examples uses <br />
-       CSS animation to change fill, and transform:translate to move with cubicInOut.
+      CSS animation to change fill, and transform:translate to move with cubicInOut.
     </p>
 
     <svg class="cssvg" viewBox="0 0 100 100" style="height: 400px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
@@ -174,10 +178,11 @@
     </svg>
   </div>
 
-   <!-- Other.. -->
-   <div style="margin-bottom: 10em;">
+  <!-- Other.. -->
+  <div style="margin-bottom: 10em;">
     <h1>Other to look into...</h1>
-    <p>Other options: GSAP, SNAP, Web Animations API, (more) Svelte with SVG Animations.</p>
+    <p>Other options: GSAP, SNAP, Lottiefiles, Web Animations API, (more) Svelte with SVG Animations.</p>
+    <p>https://animate.style/ - tips frå Prash</p>
   </div>
 </div>
 
@@ -185,7 +190,7 @@
   .cssvg circle {
     animation:
       move 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite,
-      changeFill 10s ease 0s infinite alternate-reverse;
+      changeFill 4s ease 0s infinite alternate-reverse;
   }
 
   /* Animate CSS properties */
