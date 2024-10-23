@@ -46,10 +46,8 @@
   <div>
     <h1>Zoom using Svelte and viewBox</h1>
     <p>
-      Change width and height of SVG viewBox to zoom.
-      Tweened store and Easing cubicInOut from Svelte.
-      Use % to keep things in the same place; px to zoom.
-      Inspired by
+      Change width and height of SVG viewBox to zoom. Tweened store and Easing cubicInOut from Svelte. Use % to keep
+      things in the same place; px to zoom. Inspired by
       <a href="https://youtu.be/_jWnyJRKOvU">this</a>
       .
     </p>
@@ -70,12 +68,11 @@
       <rect x="20" y="20" width="60" height="60" fill="#55555533" />
       <rect x="30" y="30" width="40" height="40" fill="#55555533" />
 
-         <!-- Gridlines -->
-         {#each { length: 40 } as _, i}
-         <line x1="0" y1={i * 10} x2="400" y2={i * 10} stroke="#88888833" stroke-width="0.5" />
-         <line x1={i * 10} y1="0" x2={i * 10} y2="400" stroke="#88888833" stroke-width="0.5" />
-       {/each}
- 
+      <!-- Gridlines -->
+      {#each { length: 40 } as _, i}
+        <line x1="0" y1={i * 10} x2="400" y2={i * 10} stroke="#88888833" stroke-width="0.5" />
+        <line x1={i * 10} y1="0" x2={i * 10} y2="400" stroke="#88888833" stroke-width="0.5" />
+      {/each}
 
       <!-- Transform animation -->
       <circle cx="40%" cy="40%" r="4%" fill="red" class="animated" />
@@ -88,7 +85,7 @@
       % position.
       <strong>Blue:</strong>
       px position.
-      <br />
+
       <strong>Circle:</strong>
       % size.
       <strong>Rect:</strong>
@@ -101,20 +98,16 @@
     <h1>Animation with SMIL</h1>
     <p>
       <strong>SMIL</strong>
-      = Synchronized Multimedia Integration Language.
-      <br />
-      Native SVG animations, no CSS or JS.
+      = Synchronized Multimedia Integration Language. Native SVG animations, no CSS or JS.
       <a href="https://caniuse.com/svg-smil">Limited browser support.</a>
       .
-      <br />
 
-      <br />
       <strong>&lt;animateTransform&gt;</strong>
       – animate transformations such as rotation, scaling, or translation.
-      <br />
+
       <strong>&lt;animate&gt;</strong>
       – animate any attribute of an SVG element.
-      <br />
+
       <strong>&lt;animateMotion&gt;</strong>
       – animates an object along a defined path.
     </p>
@@ -153,23 +146,18 @@
     <h1>CSS animation</h1>
     <p>
       Use <a href="https://www.w3schools.com/css/css3_animations.asp"><strong>CSS animation</strong></a>
-      to animate fill, stroke, and opacity in SVG.
-      <br />
-      Other properties in SVG might not work.
+      to animate fill, stroke, and opacity in SVG. Other properties in SVG might not work.
     </p>
 
     <p>
       Use
       <a href="https://www.w3schools.com/css/css3_2dtransforms.asp">CSS transform animation</a>
-      for smooth, hardware-accelerated
-      <br />
-      animations like scaling, rotating, and translating (moving) SVG elements.
-      <br />
+      for smooth, hardware-accelerated animations like scaling, rotating, and translating (moving) SVG elements.
     </p>
 
     <p>
-      Objects animate from their initial positions. This examples uses <br />
-      CSS animation to change fill, and transform:translate to move with cubicInOut.
+      Objects animate from their initial positions. This examples uses CSS animation to change fill, and
+      transform:translate to move with cubicInOut.
     </p>
 
     <svg class="cssvg" viewBox="0 0 100 100" style="height: 400px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
