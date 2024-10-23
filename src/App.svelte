@@ -1,6 +1,11 @@
 <script>
   import { tweened } from "svelte/motion";
   import { cubicInOut } from "svelte/easing";
+  import { onMount } from "svelte";
+  import Prism from "prismjs";
+  import "prismjs/themes/prism-tomorrow.css";
+  import condeSnippets from './assets/codesnippets.js';
+
 
   // Create tweened stores for width and height
   let width = tweened(100, { duration: 500, easing: cubicInOut });
@@ -27,28 +32,35 @@
     width.set(100);
     height.set(100);
   }
+
+  onMount(() => {
+    Prism.highlightAll();
+  });
 </script>
 
 <svelte:window bind:scrollY={y} />
 
-<div style="min-height: 200vh; position: relative; max-width: 400px; padding: 10px;">
+<div style="min-height: 200vh; position: relative; max-width: 600px; padding: 10px;">
   <!-- Scroll position -->
   <div>
     <h1>Bind scroll position to SVG attribute</h1>
     <p>With svelte window bind. Scroll position: {Math.round(y)}</p>
     <svg viewBox="0 0 100 25" style="height: 100px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="100" height="25" fill="black" />
-      <circle cx={y * 0.5} cy="50%" r="4%" fill="yellow"></circle>
+      <circle cx={y * 0.5} cy="50%" r="4%" fill="yellow" />
     </svg>
+    <p>Get the y scroll position:</p>
+    <pre><code class="language-html">{condeSnippets.bindy}</code></pre>
+    <p>Do calculations (if any), and apply to an attribute in the SVG.</p>
+    <pre><code class="language-markup">{condeSnippets.bindysvg}</code></pre>
   </div>
 
   <!-- Zoom -->
   <div>
     <h1>Zoom using Svelte and viewBox</h1>
     <p>
-      Change width and height of SVG viewBox to zoom. Tweened store and Easing cubicInOut from Svelte. Use % to keep
-      things in the same place; px to zoom. Inspired by
-      <a href="https://youtu.be/_jWnyJRKOvU">this</a>
+      Create smooth zoom effects in an SVG. The graphics in the SVG can go beyond the current viewBox. Inspired by
+      <a href="https://youtu.be/_jWnyJRKOvU">this video</a>
       .
     </p>
     <div style="margin-bottom: 1em;">
@@ -91,6 +103,10 @@
       <strong>Rect:</strong>
       px size.
     </p>
+    <p>Use Tweened from Svelte Motion to get smooth zoom transitions.</p>
+    <pre><code class="language-javascript">{condeSnippets.viewboxtween}</code></pre>
+    <p>Do calculations in JS and set the SVG viewBox.</p>
+    <pre><code class="language-markup">{condeSnippets.viewbox}</code></pre>
   </div>
 
   <!-- SMIL -->
@@ -98,19 +114,18 @@
     <h1>Animation with SMIL</h1>
     <p>
       <strong>SMIL</strong>
-      = Synchronized Multimedia Integration Language. Native SVG animations, no CSS or JS.
+      = <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL">Synchronized Multimedia Integration Language</a>. Native SVG animations, no CSS or JS.
       <a href="https://caniuse.com/svg-smil">Limited browser support.</a>
-      .
-
-      <strong>&lt;animateTransform&gt;</strong>
-      – animate transformations such as rotation, scaling, or translation.
-
-      <strong>&lt;animate&gt;</strong>
-      – animate any attribute of an SVG element.
-
-      <strong>&lt;animateMotion&gt;</strong>
-      – animates an object along a defined path.
-    </p>
+  
+      <ul>
+        <li><strong>&lt;animateTransform&gt;</strong>
+          – animate transformations such as rotation, scaling, or translation.</li>
+        <li><strong>&lt;animate&gt;</strong>
+          – animate any attribute of an SVG element.</li>
+        <li>  <strong>&lt;animateMotion&gt;</strong>
+          – animates an object along a defined path.</li>
+      </ul>
+      
     <svg viewBox="0 0 100 100" style="height: 400px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
       <!-- Background -->
       <rect x="0" y="0" width="100" height="100" fill="black" />
@@ -139,6 +154,11 @@
         />
       </circle>
     </svg>
+
+    <p>Red circle animated using &lt;animateTransform&gt; and &lt;animate&gt;:</p>
+    <pre><code class="language-markup">{condeSnippets.smilAnimate}</code></pre>
+    <p>Pink circle follows path using &lt;animateMotion&gt;:</p>
+    <pre><code class="language-markup">{condeSnippets.smilAnimateMotion}</code></pre>
   </div>
 
   <!-- CSS -->
@@ -156,14 +176,15 @@
     </p>
 
     <p>
-      Objects animate from their initial positions. This examples uses CSS animation to change fill, and
-      transform:translate to move with cubicInOut.
+      Objects animate from their initial positions. Tip: use <a href="https://cubic-bezier.com/">cubic-bezier.com</a> for previewing custom timing functions. Here: cubicInOut.
     </p>
 
     <svg class="cssvg" viewBox="0 0 100 100" style="height: 400px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="100" height="100" fill="black" />
       <circle cx="20%" cy="20%" r="4%" fill="red" />
     </svg>
+    <p>CSS in &lt;style&gt;:</p>
+    <pre><code class="language-css">{condeSnippets.cssAnimation}</code></pre>
   </div>
 
   <!-- Other.. -->
@@ -183,30 +204,27 @@
 
   /* Animate CSS properties */
   @keyframes changeFill {
-    0% {
-      fill: red;
-    }
-    100% {
-      fill: blue;
-    }
+    0% { fill: red; }
+    100% { fill: blue; }
   }
 
   /* Animate with transform property */
   @keyframes move {
-    0% {
-      transform: translate(0, 0);
-    }
-    25% {
-      transform: translate(60%, 0%);
-    }
-    50% {
-      transform: translate(60%, 60%);
-    }
-    75% {
-      transform: translate(0%, 60%);
-    }
-    100% {
-      transform: translate(0, 0);
-    }
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(60%, 0%); }
+    50% { transform: translate(60%, 60%); }
+    75% { transform: translate(0%, 60%); }
+    100% { transform: translate(0, 0);}
+  }
+
+  code {
+    font-family: "Fira Code", monospace;
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  pre {
+    border-radius: 0.5rem;
   }
 </style>
