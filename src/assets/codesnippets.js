@@ -59,6 +59,14 @@ cssAnimation: `.cssvg circle {
   75% { transform: translate(0%, 60%); }
   100% { transform: translate(0, 0);}
 }`,
+
+reduceMotion: `/* For users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animated-element {
+    animation: none; /* Disable animations */
+  }
+}`,
+
 };
 
 export default condesnippets;
