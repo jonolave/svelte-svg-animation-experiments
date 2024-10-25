@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
 
   import lottie from "lottie-web";
-  let lottieHoverContainer; // for animation on hover
+  let lottieHoverContainer = $state(); // for animation on hover
   let lottieHoverAnimation; // for animation on hover
 
   function lottieMouseEnter() {
@@ -20,4 +20,4 @@
   });
 </script>
 
-<div bind:this={lottieHoverContainer} on:mouseenter={lottieMouseEnter} style="width: 100px; height: auto;"></div>
+<div bind:this={lottieHoverContainer} onmouseenter={lottieMouseEnter} style="width: 100px; height: auto;"></div>

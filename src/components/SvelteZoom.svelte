@@ -10,12 +10,12 @@
   let width = tweened(100, { duration: prefersReducedMotion ? 0 : 500, easing: cubicInOut });
   let height = tweened(100, { duration: prefersReducedMotion ? 0 : 500, easing: cubicInOut });
 
-  $: mySvg = {
+  let mySvg = $derived({
     x: 0,
     y: 0,
     width: $width,
     height: $height,
-  };
+  });
 
   function zoom(x, y) {
     const newWidth = mySvg.width * x;
@@ -32,9 +32,9 @@
 </script>
 
 <div style="margin-bottom: 1em;">
-  <button on:click={() => zoom(1.25, 1.25)}>Zoom out</button>
-  <button on:click={() => zoom(0.8, 0.8)}>Zoom in</button>
-  <button on:click={() => resetZoom()}>Reset</button>
+  <button onclick={() => zoom(1.25, 1.25)}>Zoom out</button>
+  <button onclick={() => zoom(0.8, 0.8)}>Zoom in</button>
+  <button onclick={() => resetZoom()}>Reset</button>
 </div>
 
 <svg

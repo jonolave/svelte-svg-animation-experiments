@@ -4,4 +4,7 @@ export default {
   // Consult https://svelte.dev/docs#compile-time-svelte-preprocess
   // for more information about preprocessors
   preprocess: vitePreprocess(),
+  ompilerOptions: {
+    dev: true // Set this to false for production builds
+  }
 }

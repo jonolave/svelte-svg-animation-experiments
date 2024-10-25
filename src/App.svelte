@@ -18,9 +18,9 @@
   import condeSnippets from "./assets/codesnippets.js"; // my code snippets
 
   // Scroll position
-  var y = 0;
-  $: y_bottom = y + window.innerHeight;
-  let svgTop = 1500; // will change onMount
+  var y = $state(0);
+  let y_bottom = $derived(y + window.innerHeight);
+  let svgTop = $state(1500); // will change onMount
 
   onMount(() => {
     Prism.highlightAll();

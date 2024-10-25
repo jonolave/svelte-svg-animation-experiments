@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
 
   import lottie from "lottie-web";
-  let lottieContainer;
+  let lottieContainer = $state();
 
    // Check for reduced motion preference
    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
