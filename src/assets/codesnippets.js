@@ -60,12 +60,57 @@ cssAnimation: `.cssvg circle {
   100% { transform: translate(0, 0);}
 }`,
 
-reduceMotion: `/* For users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
+reduceMotion: `@media (prefers-reduced-motion: reduce) {
   .animated-element {
     animation: none; /* Disable animations */
   }
 }`,
+reduceMotionJS: `const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;`,
+
+svgator: `<object
+  type="image/svg+xml"
+  data="svgator.svg"
+  title="Rocket morphing into heart"
+  style="height: 100px; width: 100px;">
+</object>`,
+
+lottieSimplePlay: `import lottie from "lottie-web";
+let lottieContainer;
+
+onMount(() => {
+  // Lottie plain animation
+  lottie.loadAnimation({
+    container: lottieContainer, // First container
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    path: "lottieAirplane.json",
+  });
+});`,
+
+lottieSimplePlayHTML: `<div bind:this={lottieContainer} style="width: 100px; height: 100px;"></div>`,
+
+lottieOnHover: `import lottie from "lottie-web";
+let lottieHoverContainer;
+let lottieHoverAnimation;
+
+function lottieMouseEnter() {
+    lottieHoverAnimation.goToAndPlay(0, true);
+  }
+
+onMount(() => {
+  lottieHoverAnimation = lottie.loadAnimation({
+    container: lottieHoverContainer,
+    renderer: "svg",
+    loop: false,
+    autoplay: false,
+    path: "lottieAirplane.json",
+  });
+});`,
+
+lottieOnHoverHTML: `<div bind:this={lottieHoverContainer} on:mouseenter={lottieMouseEnter} style="width: 42px; height: auto;"></div>
+`,
+
 
 };
 
