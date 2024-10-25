@@ -1,4 +1,6 @@
 <script>
+  import AnimotionJS from "./components/AnimotionJS.svelte";
+
   import { onMount } from "svelte";
 
   // Example components
@@ -50,21 +52,6 @@
       <li>Mac: System settings &gt; Accessibbility &gt; Display &gt; Reduce motion (turn on)</li>
       <li>iPhone: System settings &gt; Accessibbility &gt; Motion &gt; Reduce motion (turn on)</li>
     </ul>
-  </div>
-
-  <!-- Scroll position -->
-  <div>
-    <h2>Bind scroll position to SVG attribute</h2>
-    <svg id="mySVG" viewBox="0 0 100 25" style="height: 100px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width="100" height="25" fill="black" />
-      <circle cx={y_bottom > svgTop ? (y_bottom-svgTop) * 0.1 : 0} cy="50%" r="4%" fill="yellow" />
-    </svg>
-    <p>Scroll position is {Math.round(y)}. Scrolled since SVG entered viewport: {Math.round(y_bottom-svgTop)}</p>
-
-    <p>Get the y scroll position:</p>
-    <pre><code class="language-html">{condeSnippets.bindy}</code></pre>
-    <p>Do calculations (if any), and apply to an attribute in the SVG.</p>
-    <pre><code class="language-markup">{condeSnippets.bindysvg}</code></pre>
   </div>
 
   <!-- Zoom -->
@@ -221,6 +208,27 @@
     <pre><code class="language-HTML">{condeSnippets.lottieOnHoverHTML}</code></pre>
   </div>
 
+  <!-- Svelte: scroll position -->
+  <div>
+    <h2>Svelte: bind scroll position to SVG attribute</h2>
+    <svg id="mySVG" viewBox="0 0 100 25" style="height: 100px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="100" height="25" fill="black" />
+      <circle cx={y_bottom > svgTop ? (y_bottom - svgTop) * 0.1 : 0} cy="50%" r="4%" fill="yellow" />
+    </svg>
+    <p>Scroll position is {Math.round(y)}. Scrolled since SVG entered viewport: {Math.round(y_bottom - svgTop)}</p>
+
+    <p>Get the y scroll position:</p>
+    <pre><code class="language-html">{condeSnippets.bindy}</code></pre>
+    <p>Do calculations (if any), and apply to an attribute in the SVG.</p>
+    <pre><code class="language-markup">{condeSnippets.bindysvg}</code></pre>
+  </div>
+
+  <!-- Svelte: animotionjs -->
+  <h2>Svelte: Animotion JS</h2>
+  <p><a href="https://github.com/animotionjs/motion">Animotion</a> is a simple Svelte animation library that uses Svelte's built-in tweened store.</p>
+  <AnimotionJS/>
+  <div></div>
+
   <!-- Other.. -->
   <div style="margin-bottom: 10em;">
     <h2>Other to look into...</h2>
@@ -243,7 +251,7 @@
 
     <p>
       <a href="https://github.com/micha-lmxt/svelte-motion">Svelte-motion</a>
-       is based on Framer-motion (which is for React). But currently not maintained or up to date.
+      is based on Framer-motion (which is for React). But currently not maintained or up to date.
     </p>
   </div>
 </main>
