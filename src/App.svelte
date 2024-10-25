@@ -1,6 +1,4 @@
 <script>
-  import AnimotionJS from "./components/AnimotionJS.svelte";
-
   import { onMount } from "svelte";
 
   // Example components
@@ -11,23 +9,39 @@
   import CSSanimation from "./components/CSSanimation.svelte";
   import LottieonHover from "./components/LottieOnHover.svelte";
   import LottiePlayAndLoop from "./components/LottiePlayAndLoop.svelte";
+  import AnimotionJS from "./components/AnimotionJS.svelte";
 
   // Prism for showing code snippets
   import Prism from "prismjs";
   import "prismjs/themes/prism-tomorrow.css";
   import condeSnippets from "./assets/codesnippets.js"; // my code snippets
 
-  // Scroll position
-  var y = $state(0);
-  let y_bottom = $derived(y + window.innerHeight);
-  let svgTop = $state(1500); // will change onMount
+  // Scroll position and SVG
+  let y = 0;
+  let svgTop = 0;
+  let hasEnteredViewport = false;
+  let scrollSinceSvgInView = 0;
 
   onMount(() => {
     Prism.highlightAll();
 
-    // Y position of SVG
-    svgTop = document.querySelector("#mySVG").getBoundingClientRect().top;
+    const svgElement = document.querySelector("#mySVG");
+
+    if (svgElement) {
+      // Calculate the SVG's position relative to the document
+      svgTop = svgElement.getBoundingClientRect().top + window.scrollY;
+    }
   });
+
+  // Start counting when the SVG enters the viewport
+  $: if (!hasEnteredViewport && y + window.innerHeight >= svgTop) {
+    hasEnteredViewport = true;
+  }
+
+  // Calculate scroll distance since the SVG entered the viewport
+  $: if (hasEnteredViewport) {
+    scrollSinceSvgInView = y + window.innerHeight - svgTop;
+  }
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -213,9 +227,12 @@
     <h2>Svelte: bind scroll position to SVG attribute</h2>
     <svg id="mySVG" viewBox="0 0 100 25" style="height: 100px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="100" height="25" fill="black" />
-      <circle cx={y_bottom > svgTop ? (y_bottom - svgTop) * 0.1 : 0} cy="50%" r="4%" fill="yellow" />
+      <circle cx={hasEnteredViewport ? scrollSinceSvgInView * 0.1 : 0} cy="50%" r="4%" fill="yellow" />
     </svg>
-    <p>Scroll position is {Math.round(y)}. Scrolled since SVG entered viewport: {Math.round(y_bottom - svgTop)}</p>
+    <p>Scroll position: {y}px</p>
+    <p>SVG Y position relative to the document: {svgTop}px</p>
+    <p>Has the SVG entered the viewport? {hasEnteredViewport ? "Yes" : "No"}</p>
+    <p>Scroll distance since SVG entered the viewport: {hasEnteredViewport ? scrollSinceSvgInView + "px" : "N/A"}</p>
 
     <p>Get the y scroll position:</p>
     <pre><code class="language-html">{condeSnippets.bindy}</code></pre>
@@ -225,34 +242,30 @@
 
   <!-- Svelte: animotionjs -->
   <h2>Svelte: Animotion JS</h2>
-  <p><a href="https://github.com/animotionjs/motion">Animotion</a> is a simple Svelte animation library that uses Svelte's built-in tweened store.</p>
-  <AnimotionJS/>
+  <p>
+    <a href="https://github.com/animotionjs/motion">Animotion</a>
+    is a simple Svelte animation library that uses Svelte's built-in tweened store.
+  </p>
+  <AnimotionJS />
   <div></div>
 
   <!-- Other.. -->
   <div style="margin-bottom: 10em;">
-    <h2>Other to look into...</h2>
-    <p>Lottiefiles</p>
-    <p>
-      (more) Svelte with SVG Animations. Recreate <a href="https://youtu.be/_jWnyJRKOvU">this video</a>
-    </p>
-    <p>
-      <a href="https://gsap.com/">GSAP</a>
-      (just
-      <a href="https://gsap.com/blog/webflow-GSAP/">acquired by Webflow</a>
-      ).
-    </p>
-
-    <p>
-      <a href="http://snapsvg.io/">SNAP</a>
-      - JS lib for creating / editing SVG. With
-      <a href="https://css-tricks.com/snap-animation-states/">JavaScript API for animation</a>
-    </p>
-
-    <p>
-      <a href="https://github.com/micha-lmxt/svelte-motion">Svelte-motion</a>
-      is based on Framer-motion (which is for React). But currently not maintained or up to date.
-    </p>
+    <h2>Other solutions to check out...</h2>
+    <ul>
+      <li>(more) Svelte with SVG Animations.</li>
+      <li>
+        <a href="https://gsap.com/">GSAP</a>
+        (just
+        <a href="https://gsap.com/blog/webflow-GSAP/">acquired by Webflow</a>
+        ).
+      </li>
+      <li>
+        <a href="http://snapsvg.io/">SNAP</a>
+        - JS lib for creating / editing SVG. With
+        <a href="https://css-tricks.com/snap-animation-states/">JavaScript API for animation</a>
+      </li>
+    </ul>
   </div>
 </main>
 
