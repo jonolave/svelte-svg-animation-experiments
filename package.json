@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -17,6 +17,7 @@
     "@animotion/motion": "^1.0.1",
     "animate.css": "^4.1.1",
     "lottie-web": "^5.12.2",
+    "maplibre-gl": "^4.7.1",
     "prismjs": "^1.29.0"
   }
 }

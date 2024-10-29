@@ -10,6 +10,8 @@
   import LottieonHover from "./components/LottieOnHover.svelte";
   import LottiePlayAndLoop from "./components/LottiePlayAndLoop.svelte";
   import AnimotionJS from "./components/AnimotionJS.svelte";
+  import SplineScene from "./components/SplineScene.svelte";
+  import MapLibre from "./components/MapLibre.svelte";
 
   // Prism for showing code snippets
   import Prism from "prismjs";
@@ -21,6 +23,21 @@
   let svgTop = 0;
   let hasEnteredViewport = false;
   let scrollSinceSvgInView = 0;
+
+  //  Map
+  let mapPosition = { 
+    lng: 10.754, 
+    lat: 59.92, 
+    zoom: 12, 
+    pitch: 0 };
+
+  function animateMap() {
+    mapPosition.lng = 10.754; 
+    mapPosition.lat = 59.92 + Math.random() * 0.1;
+    mapPosition.zoom = 12 + Math.random() * 0.1;
+    mapPosition.pitch = Math.random() * 50;
+  }
+
 
   onMount(() => {
     Prism.highlightAll();
@@ -241,13 +258,31 @@
   </div>
 
   <!-- Svelte: animotionjs -->
-  <h2>Svelte: Animotion JS</h2>
-  <p>
-    <a href="https://github.com/animotionjs/motion">Animotion</a>
-    is a simple Svelte animation library that uses Svelte's built-in tweened store.
-  </p>
-  <AnimotionJS />
-  <div></div>
+  <div>
+    <h2>Svelte: Animotion JS</h2>
+    <p>
+      <a href="https://github.com/animotionjs/motion">Animotion</a>
+      is a simple Svelte animation library that uses Svelte's built-in tweened store.
+    </p>
+    <AnimotionJS />
+  </div>
+
+  <!-- Spline 3d scene -->
+  <div style="">
+    <h2>Spline 3D scene embed</h2>
+    <div>
+      <SplineScene />
+    </div>
+  </div>
+
+  <!-- MapLibre -->
+  <div style="">
+    <h2>MapLibre</h2>
+    <div style="margin-bottom: 1rem;">
+      <MapLibre lng={mapPosition.lng} lat={mapPosition.lat} zoom={mapPosition.zoom} pitch={mapPosition.pitch}/>
+    </div>
+    <button on:click={animateMap}>Animate map</button>
+  </div>
 
   <!-- Other.. -->
   <div style="margin-bottom: 10em;">
