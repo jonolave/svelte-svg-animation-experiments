@@ -42,12 +42,12 @@
       console.error("Map failed to load:", e);
     });
 
-    // map.dragPan.disable(); // Disable panning with the mouse
-    // map.scrollZoom.disable(); // Disable zooming with the scroll wheel
-    // map.boxZoom.disable(); // Disable box zoom (shift + drag)
-    // map.doubleClickZoom.disable(); // Disable zooming by double-clicking
-    // map.touchZoomRotate.disable(); // Disable zooming and rotation with touch gestures
-    // map.keyboard.disable(); // Disable keyboard interactions
+    map.dragPan.disable(); // Disable panning with the mouse
+    map.scrollZoom.disable(); // Disable zooming with the scroll wheel
+    map.boxZoom.disable(); // Disable box zoom (shift + drag)
+    map.doubleClickZoom.disable(); // Disable zooming by double-clicking
+    map.touchZoomRotate.disable(); // Disable zooming and rotation with touch gestures
+    map.keyboard.disable(); // Disable keyboard interactions
 
     // Load GeoJSON from the public folder
     const geojsonData = await loadGeoJSON();
