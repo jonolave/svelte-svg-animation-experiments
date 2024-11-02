@@ -12,6 +12,9 @@
   import AnimotionJS from "./components/AnimotionJS.svelte";
   import SplineScene from "./components/SplineScene.svelte";
   import MapLibre from "./components/MapLibre.svelte";
+  import RiveExampleStatic from "./components/RiveExampleStatic.svelte"; 
+  import RiveExampleInteractive from "./components/RiveExampleInteractive.svelte"; 
+
 
   // Prism for showing code snippets
   import Prism from "prismjs";
@@ -235,6 +238,26 @@
     </p>
     <AnimateStyle />
   </div>
+
+<!-- Rive -->
+<div>
+  <h2>Rive</h2>
+  <p>
+    <a href="https://rive.app/">Rive</a> offers both an editor and a runtime for animations. By using 'state machines' (variables connected to animations) it is possible to change states and start animations. Rive uses the canvas elements to render the animations on web.
+  </p>
+  <h3>Plain animation example</h3>
+  <p>It is possible to start and stop the animation from JavaScript, and thereby stop the animation if user prefers-reduced-motion.</p>
+  <div>
+    <RiveExampleStatic />
+  </div>
+    <h3>Example with 'State machine'</h3>
+    <div>
+    <p>Made using a <a href="https://rive.app/blog/create-a-star-rating-component-with-rive-s-state-machine">Star rating tutorial</a>. It's possible to listen for state changes, or even <a href="https://www.youtube.com/watch?v=XPe488TRUxo">fire events</a> from the timeline.</p>
+ 
+    <RiveExampleInteractive />
+  </div>
+</div>
+
 
   <!-- Svgator export -->
   <div>
