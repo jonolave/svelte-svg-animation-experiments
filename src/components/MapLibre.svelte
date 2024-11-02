@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte";
-  import { Map, NavigationControl } from "maplibre-gl";
+  import { Map } from "maplibre-gl";
   import "maplibre-gl/dist/maplibre-gl.css";
 
   // Props

@@ -18,25 +18,29 @@ $: mySvg = {
 };`,
 
 smilAnimate: `<circle cx="40%" cy="40%" r="4%" fill="red">
-  <animateTransform
-    attributeName="transform"
-    attributeType="XML"
-    type="scale"
-    from="1"
-    to="1.5"
-    dur="2s"
-    repeatCount="indefinite"
-  />
-  <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite" />
+  {#if !prefersReducedMotion}
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="scale"
+      from="1"
+      to="1.5"
+      dur="2s"
+      repeatCount="indefinite"
+    />
+    <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite" />
+  {/if}
 </circle>`,
 
 smilAnimateMotion: `<circle cx="0" cy="0" r="4" fill="pink">
-  <animateMotion
-    path="M5 39.8583C18.5 28.5 49.5 17.0001 68.5 26.9999C87.0413 36.7583 38.2912 49.5638 41 67C44.3086 88.2977 80.2716 89 96 89"
-    begin="0s"
-    dur="10s"
-    repeatCount="indefinite"
-  />
+  {#if !prefersReducedMotion}
+    <animateMotion
+      path="M5 39.8583C18.5 28.5 49.5 17.0001 68.5 26.9999C87.0413 36.7583 38.2912 49.5638 41 67C44.3086 88.2977 80.2716 89 96 89"
+      begin="0s"
+      dur="10s"
+      repeatCount="indefinite"
+    />
+  {/if}
 </circle>`,
 
 cssAnimation: `.cssvg circle {
@@ -62,7 +66,7 @@ cssAnimation: `.cssvg circle {
 
 reduceMotion: `@media (prefers-reduced-motion: reduce) {
   .animated-element {
-    animation: none; /* Disable animations */
+    animation: none;
   }
 }`,
 reduceMotionJS: `const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;`,
@@ -110,6 +114,30 @@ onMount(() => {
 
 lottieOnHoverHTML: `<div bind:this={lottieHoverContainer} on:mouseenter={lottieMouseEnter} style="width: 42px; height: auto;"></div>
 `,
+
+animotion: `// Initial values
+const camera = tween({ x: -2.5, y: -2.5, w: 40, h: 40 });
+const circle = tween({ x: 2.5, y: 2.5, r: 1.5, fill: "#00ffff" });
+const text = tween({ count: 0, opacity: 0 });
+
+// Animate
+async function animate() {
+  await camera.sfx(sfx.transition).to({ x: -1, y: -1, w: 12, h: 12 });
+  
+  circle.sfx(sfx.transition).to({ x: 10, y: 10, r: 3, fill: "#ffff00" })
+  camera.to({ x: 4, y: 4 })
+  await text.to({ opacity: 1 }, { duration: 300 })
+
+  text.sfx(sfx.tally).to({ count: 10_000 }, { duration: 600 });
+}`,
+mapLibre: `map.flyTo({
+  center: [lng, lat],
+  zoom: zoom,
+  pitch: pitch, // Tilt
+  speed: 0.2, // Speed
+  curve: 1.42,
+  easing: (t) => t * ( 2 - t), // Easing function
+});`,
 
 
 };

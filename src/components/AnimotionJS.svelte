@@ -16,7 +16,6 @@
     await camera.sfx(sfx.transition).to({ x: -1, y: -1, w: 12, h: 12 }); // finish this animation before starting the next
     
     circle.sfx(sfx.transition).to({ x: 10, y: 10, r: 3, fill: "#ffff00" })
-    
     camera.to({ x: 4, y: 4 })
 
     await text.to({ opacity: 1 }, { duration: 300 }) // finish this animation before starting the next

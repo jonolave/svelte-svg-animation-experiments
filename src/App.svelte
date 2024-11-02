@@ -25,19 +25,19 @@
   let scrollSinceSvgInView = 0;
 
   //  Map
-  let mapPosition = { 
-    lng: 10.754, 
-    lat: 59.92, 
-    zoom: 12, 
-    pitch: 0 };
+  let mapPosition = {
+    lng: 10.754,
+    lat: 59.92,
+    zoom: 12,
+    pitch: 0,
+  };
 
   function animateMap() {
-    mapPosition.lng = 10.754; 
+    mapPosition.lng = 10.754;
     mapPosition.lat = 59.92 + Math.random() * 0.1;
     mapPosition.zoom = 12 + Math.random() * 0.1;
     mapPosition.pitch = Math.random() * 50;
   }
-
 
   onMount(() => {
     Prism.highlightAll();
@@ -76,39 +76,13 @@
     <p>Users can enable 'reduced motion' in their OS, and we should respect their choice.</p>
     <p>In CSS, set options for reduced motion like this:</p>
     <pre><code class="language-css">{condeSnippets.reduceMotion}</code></pre>
-    <p>In JavaScript, check for reduced motion like so:</p>
+    <p>For non-CSS animation, use JavaScript to check for reduced motion:</p>
     <pre><code class="language-js">{condeSnippets.reduceMotionJS}</code></pre>
     <p>To test the result yourself, enable 'Reduced motion' like so:</p>
     <ul>
       <li>Mac: System settings &gt; Accessibbility &gt; Display &gt; Reduce motion (turn on)</li>
       <li>iPhone: System settings &gt; Accessibbility &gt; Motion &gt; Reduce motion (turn on)</li>
     </ul>
-  </div>
-
-  <!-- Zoom -->
-  <div>
-    <h2>Zoom using Svelte and viewBox</h2>
-    <p>
-      Create smooth zoom effects in an SVG. The graphics in the SVG can go beyond the current viewBox. Inspired by
-      <a href="https://youtu.be/_jWnyJRKOvU">this video</a>
-      .
-    </p>
-    <SvelteZoom />
-    <p>
-      <strong>Red:</strong>
-      % position.
-      <strong>Blue:</strong>
-      px position.
-
-      <strong>Circle:</strong>
-      % size.
-      <strong>Rect:</strong>
-      px size.
-    </p>
-    <p>Use Tweened from Svelte Motion to get smooth zoom transitions.</p>
-    <pre><code class="language-javascript">{condeSnippets.viewboxtween}</code></pre>
-    <p>Do calculations in JS and set the SVG viewBox.</p>
-    <pre><code class="language-markup">{condeSnippets.viewbox}</code></pre>
   </div>
 
   <!-- SMIL -->
@@ -144,7 +118,10 @@
     </ul>
 
     <SMILanimation />
-    <p>Red circle animated using &lt;animateTransform&gt; and &lt;animate&gt;:</p>
+    <p>
+      You need to use JavaScript to detect reduced motion. Exclude or adapt animation block accordingly. Red circle
+      animated using &lt;animateTransform&gt; and &lt;animate&gt;:
+    </p>
     <pre><code class="language-markup">{condeSnippets.smilAnimate}</code></pre>
     <p>Pink circle follows path using &lt;animateMotion&gt;:</p>
     <pre><code class="language-markup">{condeSnippets.smilAnimateMotion}</code></pre>
@@ -187,6 +164,67 @@
     <pre><code class="language-css">{condeSnippets.reduceMotion}</code></pre>
   </div>
 
+  <!-- Svelte: Zoom -->
+  <div>
+    <h2>Zoom using Svelte and viewBox</h2>
+    <p>
+      Create smooth zoom effects in an SVG. The graphics in the SVG can go beyond the current viewBox. Inspired by
+      <a href="https://youtu.be/_jWnyJRKOvU">this video</a>
+      .
+    </p>
+    <SvelteZoom />
+    <p>
+      <strong>Red:</strong>
+      % position.
+      <strong>Blue:</strong>
+      px position.
+
+      <strong>Circle:</strong>
+      % size.
+      <strong>Rect:</strong>
+      px size.
+    </p>
+    <p>Use Tweened from Svelte Motion to get smooth zoom transitions.</p>
+    <pre><code class="language-javascript">{condeSnippets.viewboxtween}</code></pre>
+    <p>Do calculations in JS and set the SVG viewBox.</p>
+    <pre><code class="language-markup">{condeSnippets.viewbox}</code></pre>
+  </div>
+
+  <!-- Svelte: scroll position -->
+  <div>
+    <h2>Svelte: bind scroll position to SVG attribute</h2>
+    <svg id="mySVG" viewBox="0 0 100 25" style="height: 100px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="100" height="25" fill="black" />
+      <circle cx={hasEnteredViewport ? scrollSinceSvgInView * 0.1 : 0} cy="50%" r="4%" fill="yellow" />
+    </svg>
+    <p>Scroll position: {y}px</p>
+   
+    <p>Get the y scroll position:</p>
+    <pre><code class="language-html">{condeSnippets.bindy}</code></pre>
+    <p>Do calculations (if any), and apply to an attribute in the SVG.</p>
+    <pre><code class="language-markup">{condeSnippets.bindysvg}</code></pre>
+  </div>
+
+  <!-- Svelte: animotionjs -->
+  <div>
+    <h2>Svelte: Animotion JS</h2>
+    <p>
+      <a href="https://github.com/animotionjs/motion">Animotion</a>
+      is a simple Svelte animation library that uses Svelte's built-in tweened store. Includes sound effects. 
+    </p>
+    <AnimotionJS />
+    <p>Code:</p>
+    <pre><code class="language-js">{condeSnippets.animotion}</code></pre>
+  </div>
+
+  <!-- Spline 3d scene -->
+  <div style="">
+    <h2>Spline 3D scene embed</h2>
+    <div>
+      <SplineScene />
+    </div>
+  </div>
+
   <!-- Animate.style -->
   <div>
     <h2>Animate.style</h2>
@@ -216,72 +254,37 @@
   <div>
     <h2>Lottie</h2>
     <p>
-      Animate in <a href="https://creator.lottiefiles.com/">Lottie creator</a>
-      , After Effects or Figma. Export JSON or lottiefile. See
-      <a href="https://airbnb.io/lottie/#/web">AirBnb doc</a>
-      on how to export animatinofrom After Effects, and how to use in web or native. Supports Reduced motion on
+      Animate in <a href="https://creator.lottiefiles.com/">Lottie creator</a>, After Effects or Figma. Export JSON or lottiefile. See
+      <a href="https://airbnb.io/lottie/#/web">AirBnb docs</a>
+      on how to export animatino from After Effects, and how to use in web or native. Supports Reduced motion on
       <a href="https://github.com/airbnb/lottie-ios/discussions/2189">iOS</a>
       and web. See their
       <a href="https://developers.lottiefiles.com/docs/resources/wcag/">section on WCAG</a>
       .
     </p>
-    <h2>Autoplay and loop</h2>
+    <h3>Autoplay and loop</h3>
     <LottiePlayAndLoop></LottiePlayAndLoop>
-    <p>JS code:</p>
     <p>Code</p>
     <pre><code class="language-js">{condeSnippets.lottieSimplePlay}</code></pre>
     <pre><code class="language-html">{condeSnippets.lottieSimplePlayHTML}</code></pre>
 
-    <h2>Play on hover</h2>
+    <h3>Play on hover</h3>
     <LottieonHover />
+    <p>Code:</p>
     <pre><code class="language-js">{condeSnippets.lottieOnHover}</code></pre>
-    <p>HTML code:</p>
     <pre><code class="language-HTML">{condeSnippets.lottieOnHoverHTML}</code></pre>
-  </div>
-
-  <!-- Svelte: scroll position -->
-  <div>
-    <h2>Svelte: bind scroll position to SVG attribute</h2>
-    <svg id="mySVG" viewBox="0 0 100 25" style="height: 100px; width: 400px;" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width="100" height="25" fill="black" />
-      <circle cx={hasEnteredViewport ? scrollSinceSvgInView * 0.1 : 0} cy="50%" r="4%" fill="yellow" />
-    </svg>
-    <p>Scroll position: {y}px</p>
-    <p>SVG Y position relative to the document: {svgTop}px</p>
-    <p>Has the SVG entered the viewport? {hasEnteredViewport ? "Yes" : "No"}</p>
-    <p>Scroll distance since SVG entered the viewport: {hasEnteredViewport ? scrollSinceSvgInView + "px" : "N/A"}</p>
-
-    <p>Get the y scroll position:</p>
-    <pre><code class="language-html">{condeSnippets.bindy}</code></pre>
-    <p>Do calculations (if any), and apply to an attribute in the SVG.</p>
-    <pre><code class="language-markup">{condeSnippets.bindysvg}</code></pre>
-  </div>
-
-  <!-- Svelte: animotionjs -->
-  <div>
-    <h2>Svelte: Animotion JS</h2>
-    <p>
-      <a href="https://github.com/animotionjs/motion">Animotion</a>
-      is a simple Svelte animation library that uses Svelte's built-in tweened store.
-    </p>
-    <AnimotionJS />
-  </div>
-
-  <!-- Spline 3d scene -->
-  <div style="">
-    <h2>Spline 3D scene embed</h2>
-    <div>
-      <SplineScene />
-    </div>
   </div>
 
   <!-- MapLibre -->
   <div style="">
     <h2>MapLibre</h2>
     <div style="margin-bottom: 1rem;">
-      <MapLibre lng={mapPosition.lng} lat={mapPosition.lat} zoom={mapPosition.zoom} pitch={mapPosition.pitch}/>
+      <MapLibre lng={mapPosition.lng} lat={mapPosition.lat} zoom={mapPosition.zoom} pitch={mapPosition.pitch} />
     </div>
-    <button on:click={animateMap}>Animate map</button>
+    <button on:click={animateMap}>Animate random</button>
+    <p>Lots of code, this defines the animation:</p>
+    <pre><code class="language-js">{condeSnippets.mapLibre}</code></pre>
+  
   </div>
 
   <!-- Other.. -->
