@@ -12,20 +12,25 @@
   import AnimotionJS from "./components/AnimotionJS.svelte";
   import SplineScene from "./components/SplineScene.svelte";
   import MapLibre from "./components/MapLibre.svelte";
-  import RiveExampleStatic from "./components/RiveExampleStatic.svelte"; 
-  import RiveExampleInteractive from "./components/RiveExampleInteractive.svelte"; 
-
+  import RiveExampleStatic from "./components/RiveExampleStatic.svelte";
+  import RiveExampleInteractive from "./components/RiveExampleInteractive.svelte";
+  import Parallax from "./components/Parallax.svelte";
 
   // Prism for showing code snippets
   import Prism from "prismjs";
   import "prismjs/themes/prism-tomorrow.css";
   import condeSnippets from "./assets/codesnippets.js"; // my code snippets
 
-  // Scroll position and SVG
+  // Scroll position for SVG
   let y = 0;
   let svgTop = 0;
   let hasEnteredViewport = false;
   let scrollSinceSvgInView = 0;
+
+  // Scroll position for parallax
+  let parallaxTop = 0;
+  let parallaxHasEnteredViewport = false;
+  let parallaxScrollSinceInView = 0;
 
   //  Map
   let mapPosition = {
@@ -46,10 +51,16 @@
     Prism.highlightAll();
 
     const svgElement = document.querySelector("#mySVG");
+    const parallaxElement = document.querySelector("#myParallax");
 
     if (svgElement) {
       // Calculate the SVG's position relative to the document
       svgTop = svgElement.getBoundingClientRect().top + window.scrollY;
+    }
+
+    if (parallaxElement) {
+      // Calculate the parallax element's position relative to the document
+      parallaxTop = parallaxElement.getBoundingClientRect().top + window.scrollY;
     }
   });
 
@@ -61,6 +72,16 @@
   // Calculate scroll distance since the SVG entered the viewport
   $: if (hasEnteredViewport) {
     scrollSinceSvgInView = y + window.innerHeight - svgTop;
+  }
+
+  // Start counting when the parallax element enters the viewport
+  $: if (!parallaxHasEnteredViewport && y + window.innerHeight >= parallaxTop) {
+    parallaxHasEnteredViewport = true;
+  }
+
+  // Calculate scroll distance since the parallax element entered the viewport
+  $: if (parallaxHasEnteredViewport) {
+    parallaxScrollSinceInView = y + window.innerHeight - parallaxTop;
   }
 </script>
 
@@ -201,11 +222,20 @@
       <circle cx={hasEnteredViewport ? scrollSinceSvgInView * 0.1 : 0} cy="50%" r="4%" fill="yellow" />
     </svg>
     <p>Scroll position: {y}px</p>
-   
+
     <p>Get the y scroll position:</p>
     <pre><code class="language-html">{condeSnippets.bindy}</code></pre>
     <p>Do calculations (if any), and apply to an attribute in the SVG.</p>
     <pre><code class="language-markup">{condeSnippets.bindysvg}</code></pre>
+  </div>
+
+  <!-- Svelte: parallax -->
+  <div>
+    <h2>Svelte: parallax</h2>
+    <div id="myParallax" style="position: relative;">
+      <Parallax y={parallaxHasEnteredViewport ? parallaxScrollSinceInView - 200 : 0}></Parallax>
+    </div>
+    <!-- <p>parallaxScrollSinceInView: { Math.round(parallaxScrollSinceInView-200)}</p> -->
   </div>
 
   <!-- Svelte: animotionjs -->
@@ -213,7 +243,7 @@
     <h2>Svelte: Animotion JS</h2>
     <p>
       <a href="https://github.com/animotionjs/motion">Animotion</a>
-      is a simple Svelte animation library that uses Svelte's built-in tweened store. Includes sound effects. 
+      is a simple Svelte animation library that uses Svelte's built-in tweened store. Includes sound effects.
     </p>
     <AnimotionJS />
     <p>Code:</p>
@@ -239,25 +269,36 @@
     <AnimateStyle />
   </div>
 
-<!-- Rive -->
-<div>
-  <h2>Rive</h2>
-  <p>
-    <a href="https://rive.app/">Rive</a> offers both an editor and a runtime for animations. By using 'state machines' (variables connected to animations) it is possible to change states and start animations. Rive uses the canvas elements to render the animations on web.
-  </p>
-  <h3>Plain animation example</h3>
-  <p>It is possible to start and stop the animation from JavaScript, and thereby stop the animation if user prefers-reduced-motion.</p>
+  <!-- Rive -->
   <div>
-    <RiveExampleStatic />
-  </div>
+    <h2>Rive</h2>
+    <p>
+      <a href="https://rive.app/">Rive</a>
+      offers both an editor and a runtime for animations. By using 'state machines' (variables connected to animations) it
+      is possible to change states and start animations. Rive uses the canvas elements to render the animations on web.
+    </p>
+    <h3>Plain animation example</h3>
+    <p>
+      It is possible to start and stop the animation from JavaScript, and thereby stop the animation if user
+      prefers-reduced-motion.
+    </p>
+    <div>
+      <RiveExampleStatic />
+    </div>
     <h3>Example with 'State machine'</h3>
     <div>
-    <p>Made using a <a href="https://rive.app/blog/create-a-star-rating-component-with-rive-s-state-machine">Star rating tutorial</a>. It's possible to listen for state changes, or even <a href="https://www.youtube.com/watch?v=XPe488TRUxo">fire events</a> from the timeline.</p>
- 
-    <RiveExampleInteractive />
-  </div>
-</div>
+      <p>
+        Made using a <a href="https://rive.app/blog/create-a-star-rating-component-with-rive-s-state-machine">
+          Star rating tutorial
+        </a>
+        . It's possible to listen for state changes, or even
+        <a href="https://www.youtube.com/watch?v=XPe488TRUxo">fire events</a>
+        from the timeline.
+      </p>
 
+      <RiveExampleInteractive />
+    </div>
+  </div>
 
   <!-- Svgator export -->
   <div>
@@ -277,7 +318,8 @@
   <div>
     <h2>Lottie</h2>
     <p>
-      Animate in <a href="https://creator.lottiefiles.com/">Lottie creator</a>, After Effects or Figma. Export JSON or lottiefile. See
+      Animate in <a href="https://creator.lottiefiles.com/">Lottie creator</a>
+      , After Effects or Figma. Export JSON or lottiefile. See
       <a href="https://airbnb.io/lottie/#/web">AirBnb docs</a>
       on how to export animatino from After Effects, and how to use in web or native. Supports Reduced motion on
       <a href="https://github.com/airbnb/lottie-ios/discussions/2189">iOS</a>
@@ -307,7 +349,6 @@
     <button on:click={animateMap}>Animate random</button>
     <p>Lots of code, this defines the animation:</p>
     <pre><code class="language-js">{condeSnippets.mapLibre}</code></pre>
-  
   </div>
 
   <!-- Other.. -->
