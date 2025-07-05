@@ -1,2 +1,5 @@
+packages:
+  - '.'  # Include the root package
+  
 onlyBuiltDependencies:
   - esbuild
