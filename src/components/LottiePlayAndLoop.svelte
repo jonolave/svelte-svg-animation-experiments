@@ -1,18 +1,16 @@
 <script>
   import { onMount } from "svelte";
+  import { prefersReducedMotion } from 'svelte/motion';
 
   import lottie from "lottie-web";
   let lottieContainer = $state();
-
-   // Check for reduced motion preference
-   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   onMount(() => {
     lottie.loadAnimation({
       container: lottieContainer,
       renderer: "svg",
       loop: true,
-      autoplay: !prefersReducedMotion,
+      autoplay: !prefersReducedMotion.current,
       path: "lottieAirplane.json",
     });
   });

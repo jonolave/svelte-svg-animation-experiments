@@ -1,11 +1,10 @@
 <script>
   import { onMount } from "svelte";
   import { Rive } from "@rive-app/canvas"; // Notice the curly braces here
+  import { prefersReducedMotion } from 'svelte/motion';
 
   let riveInstance;
   let playing = $state(true);
-
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   onMount(() => {
     riveInstance = new Rive({
@@ -19,7 +18,7 @@
       },
     });
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion.current) {
       riveInstance.pause();
       playing = false;
     }

@@ -10,3 +10,6 @@ pnpm run dev
 Create a .env with root folder with
 `VITE_MAPTILER_API_KEY=[your key]`
 
+## History
+Was first created with Svelte 4. 
+Updated to Svelte 5.

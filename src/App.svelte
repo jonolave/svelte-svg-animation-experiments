@@ -115,7 +115,7 @@
     </p>
     <p>In CSS, set options for reduced motion like this:</p>
     <pre><code class="language-css">{condeSnippets.reduceMotion}</code></pre>
-    <p>For non-CSS animation, use JavaScript to check for reduced motion:</p>
+    <p>For non-CSS animation, use prefersReducedMotion from Svelte to check for reduced motion:</p>
     <pre><code class="language-js">{condeSnippets.reduceMotionJS}</code></pre>
     <p>To test the result yourself, enable 'Reduced motion' like so:</p>
     <ul>
@@ -249,7 +249,7 @@
       <strong>Rect:</strong>
       px size.
     </p>
-    <p>Use Tweened from Svelte Motion to get smooth zoom transitions.</p>
+    <p>Use <code>Tween</code> from Svelte Motion to get smooth zoom transitions. <code>Tweened</code> from Svelte 4 is deprecated. Use <code>.current</code> to get the current value and <code>.target = [new value]</code> to set a new value.</p>
     <pre><code class="language-javascript">{condeSnippets.viewboxtween}</code
       ></pre>
     <p>Do calculations in JS and set the SVG viewBox.</p>
@@ -455,6 +455,7 @@
     font-size: 0.95rem;
     white-space: pre-wrap;
     word-wrap: break-word;
+    background-color: #00000018;
   }
 
   pre {

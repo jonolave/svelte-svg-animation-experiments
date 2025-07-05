@@ -1,33 +1,31 @@
 <script>
-  import { tweened } from "svelte/motion";
+  import { Tween } from "svelte/motion";
   import { cubicInOut } from "svelte/easing";
-
-   // Check for the user's reduced motion preference
-   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  import { prefersReducedMotion } from 'svelte/motion';
 
   // Create tweened stores for width and height
   // If reduced motion: 0 duration
-  let width = tweened(100, { duration: prefersReducedMotion ? 0 : 500, easing: cubicInOut });
-  let height = tweened(100, { duration: prefersReducedMotion ? 0 : 500, easing: cubicInOut });
+  let width = new Tween(100, { duration: prefersReducedMotion.current ? 0 : 500, easing: cubicInOut });
+  let height = new Tween(100, { duration: prefersReducedMotion.current ? 0 : 500, easing: cubicInOut });
 
   let mySvg = $derived({
     x: 0,
     y: 0,
-    width: $width,
-    height: $height,
+    width: width.current,
+    height: height.current,
   });
 
   function zoom(x, y) {
     const newWidth = mySvg.width * x;
     const newHeight = mySvg.height * y;
 
-    width.set(newWidth);
-    height.set(newHeight);
+    width.target = newWidth;
+    height.target = newHeight;
   }
 
   function resetZoom() {
-    width.set(100);
-    height.set(100);
+    width.target = 100;
+    height.target = 100;
   }
 </script>
 

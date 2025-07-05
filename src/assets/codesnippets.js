@@ -6,16 +6,16 @@ const condesnippets = {
 
   viewbox: `<svg viewBox="{mySvg.x} {mySvg.y} {mySvg.width} {mySvg.height}">`,
 
-  viewboxtween: `import { tweened } from "svelte/motion";
-let width = tweened(100, { duration: 500, easing: cubicInOut });
-let height = tweened(100, { duration: 500, easing: cubicInOut });
+  viewboxtween: `import { Tween } from "svelte/motion";
+let width = new Tween(100, { duration: prefersReducedMotion.current ? 0 : 500, easing: cubicInOut });
+let height = new Tween(100, { duration: prefersReducedMotion.current ? 0 : 500, easing: cubicInOut });
 
-$: mySvg = {
+let mySvg = $derived({
   x: 0,
   y: 0,
-  width: $width,
-  height: $height,
-};`,
+  width: width.current,
+  height: height.current,
+});`,
 
 smilAnimate: `<circle cx="40%" cy="40%" r="4%" fill="red">
   {#if !prefersReducedMotion}
@@ -69,7 +69,12 @@ reduceMotion: `@media (prefers-reduced-motion: reduce) {
     animation: none;
   }
 }`,
-reduceMotionJS: `const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;`,
+reduceMotionJS: `import { prefersReducedMotion } from 'svelte/motion';
+if (prefersReducedMotion.current) {
+  // Skip animations
+} else {
+  // Run animations
+}`,
 
 svgator: `<object
   type="image/svg+xml"
