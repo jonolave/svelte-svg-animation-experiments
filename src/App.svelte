@@ -22,6 +22,8 @@
   import "prismjs/themes/prism-tomorrow.css";
   import condeSnippets from "./assets/codesnippets.js"; // my code snippets
 
+  console.clear();
+
   // Scroll position for SVG
   let y = $state(0);
   let svgTop = $state(0);
@@ -115,7 +117,10 @@
     </p>
     <p>In CSS, set options for reduced motion like this:</p>
     <pre><code class="language-css">{condeSnippets.reduceMotion}</code></pre>
-    <p>For non-CSS animation, use prefersReducedMotion from Svelte to check for reduced motion:</p>
+    <p>
+      For non-CSS animation, use prefersReducedMotion from Svelte to check for
+      reduced motion:
+    </p>
     <pre><code class="language-js">{condeSnippets.reduceMotionJS}</code></pre>
     <p>To test the result yourself, enable 'Reduced motion' like so:</p>
     <ul>
@@ -249,7 +254,12 @@
       <strong>Rect:</strong>
       px size.
     </p>
-    <p>Use <code>Tween</code> from Svelte Motion to get smooth zoom transitions. <code>Tweened</code> from Svelte 4 is deprecated. Use <code>.current</code> to get the current value and <code>.target = [new value]</code> to set a new value.</p>
+    <p>
+      Use <code>Tween</code> from Svelte Motion to get smooth zoom transitions.
+      <code>Tweened</code>
+      from Svelte 4 is deprecated. Use <code>.current</code> to get the current
+      value and <code>.target = [new value]</code> to set a new value.
+    </p>
     <pre><code class="language-javascript">{condeSnippets.viewboxtween}</code
       ></pre>
     <p>Do calculations in JS and set the SVG viewBox.</p>
@@ -295,7 +305,29 @@
   <!-- GSAP -->
   <div>
     <h2>GSAP</h2>
+    <p>3 most relevant methods:</p>
+    <ul>
+      <li>
+        <code>gsap.to()</code> - animate from current position/value
+      </li>
+      <li>
+        <code>gsap.from()</code> - animate to current position/value
+      </li>
+      <li>
+        <code>gsap.fromTo()</code> - define both starting and ending values
+      </li>
+    </ul>
+
     <GSAP></GSAP>
+    <p>Code:</p>
+    <pre><code class="language-js">{condeSnippets.gsap}</code></pre>
+    <p>
+      For simple animations it is possible to use the approach outlined in <a
+        href="https://dev.to/jasper-clarke/integrating-svelte-5-with-gsap-3-54no"
+        >this article</a
+      >. See also
+      <a href="https://gsap.com/resources/get-started">GSAP Get started</a> guide. When possible, use transforms and opacity for animation rather than layout properties like "top", "left" or "margin". 
+    </p>
   </div>
 
   <!-- Svelte: animotionjs -->
@@ -463,8 +495,8 @@
     border-radius: 0.5rem;
 
     code {
-       background-color: transparent;
-       padding: 0;
+      background-color: transparent;
+      padding: 0;
     }
   }
 </style>

@@ -21,6 +21,7 @@
     "@animotion/motion": "^1.0.1",
     "@rive-app/canvas": "^2.23.3",
     "animate.css": "^4.1.1",
+    "gsap": "^3.13.0",
     "lottie-web": "^5.12.2",
     "maplibre-gl": "^4.7.1",
     "prismjs": "^1.29.0"

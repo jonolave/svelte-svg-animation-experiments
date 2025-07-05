@@ -18,7 +18,7 @@ let mySvg = $derived({
 });`,
 
 smilAnimate: `<circle cx="40%" cy="40%" r="4%" fill="red">
-  {#if !prefersReducedMotion}
+  {#if !prefersReducedMotion.current}
     <animateTransform
       attributeName="transform"
       attributeType="XML"
@@ -118,6 +118,19 @@ onMount(() => {
 });`,
 
 lottieOnHoverHTML: `<div bind:this={lottieHoverContainer} on:mouseenter={lottieMouseEnter} style="width: 42px; height: auto;"></div>
+`,
+
+gsap: `mport { gsap } from "gsap";
+let myElement;
+
+// onMount(() => {
+gsap.from(myElement, {
+  y: 400,
+  rotation: 360,
+  duration: 5,
+});
+
+<div bind:this={myElement}></div>
 `,
 
 animotion: `// Initial values
