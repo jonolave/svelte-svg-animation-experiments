@@ -449,16 +449,22 @@
   </div>
 </main>
 
-<style>
+<style lang="scss">
   code {
     font-family: "Fira Code", monospace;
     font-size: 0.95rem;
     white-space: pre-wrap;
     word-wrap: break-word;
     background-color: #00000018;
+    padding: 1px 4px;
   }
 
   pre {
     border-radius: 0.5rem;
+
+    code {
+       background-color: transparent;
+       padding: 0;
+    }
   }
 </style>

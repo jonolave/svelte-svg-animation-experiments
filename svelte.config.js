@@ -1,10 +1,18 @@
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
 export default {
-  // Consult https://svelte.dev/docs#compile-time-svelte-preprocess
-  // for more information about preprocessors
-  preprocess: vitePreprocess(),
-  ompilerOptions: {
-    dev: true // Set this to false for production builds
+  preprocess: vitePreprocess({
+    style: ({ attributes }) => {
+      if (attributes.lang === 'scss') {
+        return {
+          // use the modern Sass JS API
+          // No need to set anything unless customizing
+        };
+      }
+    }
+  }),
+
+  compilerOptions: {
+    dev: true
   }
-}
+};
