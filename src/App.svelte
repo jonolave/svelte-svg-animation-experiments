@@ -23,23 +23,23 @@
   import condeSnippets from "./assets/codesnippets.js"; // my code snippets
 
   // Scroll position for SVG
-  let y = 0;
-  let svgTop = 0;
-  let hasEnteredViewport = false;
-  let scrollSinceSvgInView = 0;
+  let y = $state(0);
+  let svgTop = $state(0);
+  let hasEnteredViewport = $state(false);
+  let scrollSinceSvgInView = $state(0);
 
   // Scroll position for parallax
-  let parallaxTop = 0;
-  let parallaxHasEnteredViewport = false;
-  let parallaxScrollSinceInView = 0;
+  let parallaxTop = $state(0);
+  let parallaxHasEnteredViewport = $state(false);
+  let parallaxScrollSinceInView = $state(0);
 
   //  Map
-  let mapPosition = {
+  let mapPosition = $state({
     lng: 10.754,
     lat: 59.92,
     zoom: 12,
     pitch: 0,
-  };
+  });
 
   function animateMap() {
     mapPosition.lng = 10.754;
@@ -67,24 +67,32 @@
   });
 
   // Start counting when the SVG enters the viewport
-  $: if (!hasEnteredViewport && y + window.innerHeight >= svgTop) {
-    hasEnteredViewport = true;
-  }
+  $effect(() => {
+    if (!hasEnteredViewport && y + window.innerHeight >= svgTop) {
+      hasEnteredViewport = true;
+    }
+  });
 
   // Calculate scroll distance since the SVG entered the viewport
-  $: if (hasEnteredViewport) {
-    scrollSinceSvgInView = y + window.innerHeight - svgTop;
-  }
+  $effect(() => {
+    if (hasEnteredViewport) {
+      scrollSinceSvgInView = y + window.innerHeight - svgTop;
+    }
+  });
 
   // Start counting when the parallax element enters the viewport
-  $: if (!parallaxHasEnteredViewport && y + window.innerHeight >= parallaxTop) {
-    parallaxHasEnteredViewport = true;
-  }
+  $effect(() => {
+    if (!parallaxHasEnteredViewport && y + window.innerHeight >= parallaxTop) {
+      parallaxHasEnteredViewport = true;
+    }
+  });
 
   // Calculate scroll distance since the parallax element entered the viewport
-  $: if (parallaxHasEnteredViewport) {
-    parallaxScrollSinceInView = y + window.innerHeight - parallaxTop;
-  }
+  $effect(() => {
+    if (parallaxHasEnteredViewport) {
+      parallaxScrollSinceInView = y + window.innerHeight - parallaxTop;
+    }
+  });
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -414,7 +422,7 @@
         pitch={mapPosition.pitch}
       />
     </div>
-    <button on:click={animateMap}>Animate random</button>
+    <button onclick={animateMap}>Animate random</button>
     <p>Lots of code, this defines the animation:</p>
     <pre><code class="language-js">{condeSnippets.mapLibre}</code></pre>
   </div>

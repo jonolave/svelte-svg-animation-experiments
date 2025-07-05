@@ -3,7 +3,7 @@
   import { Rive } from "@rive-app/canvas"; // Notice the curly braces here
 
   let riveInstance;
-  let playing = true;
+  let playing = $state(true);
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 

@@ -1,16 +1,28 @@
 <script>
+
   import { onMount, onDestroy } from "svelte";
   import { Map } from "maplibre-gl";
   import "maplibre-gl/dist/maplibre-gl.css";
 
-  // Props
-  export let lng = 10.754; // Longitude prop (default value)
-  export let lat = 59.92; // Latitude prop (default value)
-  export let zoom = 12; // Zoom prop (default value)
-  export let pitch = 0; // Tilt (pitch) prop (default value)
+  
+  /**
+   * @typedef {Object} Props
+   * @property {number} [lng] - Props
+   * @property {number} [lat]
+   * @property {number} [zoom]
+   * @property {number} [pitch]
+   */
 
-  let map;
-  let mapContainer;
+  /** @type {Props} */
+  let {
+    lng = 10.754,
+    lat = 59.92,
+    zoom = 12,
+    pitch = 0
+  } = $props();
+
+  let map = $state();
+  let mapContainer = $state();
 
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY;
 
@@ -80,17 +92,19 @@
   });
 
   // Watch for prop changes and animate map accordingly
-  $: if (map) {
-    // Animate the map to the new center, zoom, and pitch when props change
-    map.flyTo({
-      center: [lng, lat],
-      zoom: zoom,
-      pitch: pitch, // Tilt the map
-      speed: 0.2, // Animation speed
-      curve: 1.42, // Smoother transition
-      easing: (t) => t * ( 2 - t), // Easing function for the animation
-    });
-  }
+  $effect(() => {
+    if (map) {
+      // Animate the map to the new center, zoom, and pitch when props change
+      map.flyTo({
+        center: [lng, lat],
+        zoom: zoom,
+        pitch: pitch, // Tilt the map
+        speed: 0.2, // Animation speed
+        curve: 1.42, // Smoother transition
+        easing: (t) => t * ( 2 - t), // Easing function for the animation
+      });
+    }
+  });
 
   // Clean up the map when the component is destroyed
   onDestroy(() => {

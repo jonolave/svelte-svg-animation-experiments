@@ -1,17 +1,26 @@
 <script>
-  export let y = 0;
+  
+  /**
+   * @typedef {Object} Props
+   * @property {number} [y]
+   */
+
+  /** @type {Props} */
+  let { y = 0 } = $props();
 
   const offset = 10;
   const parallaxSpeed = 0.03;
-  $: imageHeight = Math.min(264, 264 - offset * 6 + y * parallaxSpeed * 6);
+  let imageHeight = $derived(Math.min(264, 264 - offset * 6 + y * parallaxSpeed * 6));
 
-  let parallax = true;
+  let parallax = $state(true);
 
-  $: if (y * parallaxSpeed * 6 - offset * 6 >= 0) {
-    parallax = false;
-  } else {
-    parallax = true;
-  }
+  $effect(() => {
+    if (y * parallaxSpeed * 6 - offset * 6 >= 0) {
+      parallax = false;
+    } else {
+      parallax = true;
+    }
+  });
 </script>
 
 <div class="parallax-container" style="height: {imageHeight}px;">
