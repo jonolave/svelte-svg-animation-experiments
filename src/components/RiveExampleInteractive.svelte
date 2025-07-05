@@ -3,7 +3,7 @@
   import { Rive, EventType } from "@rive-app/canvas";
 
   let riveInstance;
-  let ratingValue = 0;
+  let ratingValue = $state(0);
   let inputs;
   let ratingTrigger;
 
