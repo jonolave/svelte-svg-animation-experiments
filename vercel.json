@@ -1,6 +1,5 @@
 {
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
-  "framework": "svelte",
-  "corepackEnabled": true
+  "framework": "svelte"
 }
