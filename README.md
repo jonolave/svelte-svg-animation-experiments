@@ -2,9 +2,9 @@
 
 https://svg-animation-experiments.vercel.app/
 
-npm install
+pnpm install
 
-npm run dev
+pnpm run dev
 
 ## Env secrets
 Create a .env with root folder with
