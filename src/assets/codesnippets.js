@@ -120,7 +120,7 @@ onMount(() => {
 lottieOnHoverHTML: `<div bind:this={lottieHoverContainer} on:mouseenter={lottieMouseEnter} style="width: 42px; height: auto;"></div>
 `,
 
-gsap: `mport { gsap } from "gsap";
+gsap: `import { gsap } from "gsap";
 let myElement;
 
 // onMount(() => {
